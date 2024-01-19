@@ -29,11 +29,12 @@ public class Scrittore implements Runnable{
      */
     public void scrivi(){
         BufferedWriter br=null;
+        String username;
+        String password;
         
         try {
             //1) apro il file
-            br = new BufferedWriter(
-                    new FileWriter(nomeFile));
+            br = new BufferedWriter(new FileWriter(nomeFile));
             //2) scrivo nel buffer
             br.write("File in output");
             br.write("\n\r");
