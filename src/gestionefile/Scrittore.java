@@ -15,9 +15,13 @@ import java.util.logging.Logger;
 public class Scrittore implements Runnable{
 
     String nomeFile;
+    String username;
+    String password;
     
-    public Scrittore(String nomeFile){
+    public Scrittore(String nomeFile, String username, String password){
         this.nomeFile = nomeFile;
+        this.username = username;
+        this.password = password;
     }
     
     @Override
@@ -29,15 +33,14 @@ public class Scrittore implements Runnable{
      */
     public void scrivi(){
         BufferedWriter br=null;
-        String username;
-        String password;
         
         try {
             //1) apro il file
-            br = new BufferedWriter(new FileWriter(nomeFile));
+            br = new BufferedWriter(new FileWriter(this.nomeFile));
             //2) scrivo nel buffer
             br.write("File in output");
             br.write("\n\r");
+            br.write("<"+this.username+">"+"<"+this.password+">");
             //3) svuoto il buffer e salvo nel file i dati
             br.flush();         
         } catch (IOException ex) {
