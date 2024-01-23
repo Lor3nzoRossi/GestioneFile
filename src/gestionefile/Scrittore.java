@@ -39,7 +39,7 @@ public class Scrittore implements Runnable {
             //2) scrivo nel buffer
             br.write("File in output");
             br.newLine(); // Use newLine() instead of "\n\r"
-            br.write("<" + this.username + "><" + this.password + ">");
+            br.write("<username: " + this.username + "><password: " + this.password + ">");
             //3) svuoto il buffer e salvo nel file i dati
             br.flush();
         } catch (IOException ex) {
