@@ -1,10 +1,10 @@
 package gestionefile;
 
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -12,49 +12,52 @@ import java.util.logging.Logger;
  * @version 12/01/23
  */
 
-public class Scrittore implements Runnable{
 
+public class Scrittore implements Runnable {
     String nomeFile;
     String username;
     String password;
-    
-    public Scrittore(String nomeFile, String username, String password){
+
+    public Scrittore(String nomeFile, String username, String password) {
         this.nomeFile = nomeFile;
         this.username = username;
         this.password = password;
     }
-    
+
     @Override
     public void run() {
         scrivi();
+        copia();
     }
+
     /**
      * Scrive un file di testo usando la classe BufferedWriter
      */
-    public void scrivi(){
-        BufferedWriter br=null;
-        
-        try {
+    public void scrivi() {
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(this.nomeFile))) {
             //1) apro il file
-            br = new BufferedWriter(new FileWriter(this.nomeFile));
             //2) scrivo nel buffer
             br.write("File in output");
-            br.write("\n\r");
-            br.write("<"+this.username+">"+"<"+this.password+">");
+            br.newLine(); // Use newLine() instead of "\n\r"
+            br.write("<" + this.username + "><" + this.password + ">");
             //3) svuoto il buffer e salvo nel file i dati
-            br.flush();         
+            br.flush();
         } catch (IOException ex) {
-            Logger.getLogger(Scrittore.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-        finally{
-            if (br!=null)
-                try {
-                    //4)chiudo lo stream in uscita
-                    br.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Scrittore.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    public void copia() {
+        try (BufferedReader brCopia = new BufferedReader(new FileReader("user.json"));
+             BufferedWriter bwCopia = new BufferedWriter(new FileWriter("copia.csv", true))) {
+
+            String line;
+            while ((line = brCopia.readLine()) != null) {
+                bwCopia.write(line);
+                bwCopia.newLine(); // Add a new line after each line copied
             }
-                
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
     }
 }

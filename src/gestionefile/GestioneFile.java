@@ -6,7 +6,6 @@ package gestionefile;
  * @version 12/01/23
  */
 import java.util.Scanner;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 public class GestioneFile {
     /**
      * @param args the command line arguments
@@ -24,9 +23,9 @@ public class GestioneFile {
         System.out.println("Inserisci la password: ");
         String password = scanner.nextLine();
         scanner.close();
-        //3) SCRITTURA
+        //3)SCRITTURA
         Scrittore scrittore = new Scrittore("output.csv", username, password);
         Thread threadScrittore = new Thread(scrittore);
-        threadScrittore.start();
+        threadScrittore.start();        
     }
 }
