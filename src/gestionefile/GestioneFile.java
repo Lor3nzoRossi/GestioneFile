@@ -27,6 +27,7 @@ public class GestioneFile {
         Scrittore scrittore = new Scrittore("output.csv", username, password);
         Thread threadScrittore = new Thread(scrittore);
         threadScrittore.start();
+        //4)Scrittura 
         
     }
 }

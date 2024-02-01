@@ -68,19 +68,24 @@ public class Scrittore implements Runnable {
     }
     //punto #2 e #3 insieme
     public void scrivi_DataOutputStream(){
-        try(DataOutputStream dataOut = new DataOutputStream(new FileOutputStream("user.csv"));
-            DataInputStream dataIn = new DataInputStream(new FileInputStream("user.json"))){
+        try(DataOutputStream dataOut = new DataOutputStream(new FileOutputStream("user.csv"))){
             //scrittura in output.csv con dataOutputStream
             dataOut.writeInt(1);
             dataOut.writeUTF("Alessandro");
             dataOut.writeDouble(4.25);
+        }catch(IOException ex){
+            System.out.println("eccezione catturata durante la scrittura: " + ex);
+        }
+        try(DataInputStream dataIn = new DataInputStream(new FileInputStream("user.csv"))){
             //lettura users.json
             int id = dataIn.readInt();
             String nome = dataIn.readUTF();
             double voto = dataIn.readDouble();
-        }catch(IOException ex){
-            System.out.println("eccezione catturata: " + ex);
+            
+            //stampa dei dati letti
+            System.out.println("i dati letti sono: " + id + "; " + nome + "; " + voto);
+        } catch (IOException ex) {
+            System.out.println("eccezione catturata durante la lettura: " + ex);
         }
-        
     }
 }
