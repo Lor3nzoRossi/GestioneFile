@@ -14,6 +14,10 @@ public class GestioneFile {
         //1)LETTURA
         Lettore lettore = new Lettore("user.json");
         lettore.start();
+        try {
+            lettore.join(); //Interrompo il programma per far leggere il lettore
+        } catch (Exception e) {
+        }
         //2)ELABORAZIONE
         //dichiarazione oggetto scanner
         Scanner scanner = new Scanner(System.in);
